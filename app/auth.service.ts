@@ -5,24 +5,28 @@ import { throwError, Observable} from 'rxjs';
 import { catchError} from 'rxjs/operators';
 import { Router } from '@angular/router';
 
-import { RegisterUser,LoginUser } from './user';
+import { LoginUser } from './user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  _registerurl = 'http://localhost:3000/register';
-  _loginurl = '';
-  constructor(private _http: HttpClient,
-    private router: Router) { }
+   _loginurl = '';
 
-  // register(user: RegisterUser):Observable<RegisterUser>{
-  //   let body = JSON.stringify(user);
-  //   console.log(typeof body);
-  //   return this._http.post<any>(this._registerurl,body)
-  //              .pipe(catchError(this.ErrorHandler));
-  // }
+   userData: any;
+   userToken: any;
+   userJson: any;
+
+  
+  constructor(private _http: HttpClient,
+    private router: Router) { 
+      this.userData = localStorage.getItem('currentUser');
+      this.userJson = JSON.parse(this.userData);
+      if(this.userJson != null){
+        this.userToken = this.userJson.token;
+      }
+    }
 
   ErrorHandler(error: HttpErrorResponse){
     return throwError(error);
@@ -38,8 +42,10 @@ export class AuthService {
   }
 
   getToken() {
-    return localStorage.getItem('token')
+   // console.log(this.userToken);
+    return this.userToken ;
   }
+  
   logout(){
     localStorage.removeItem('token');
     this.router.navigate(['/login']);

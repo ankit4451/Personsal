@@ -19,7 +19,7 @@ const routes: Routes = [
     //canActivate: [AuthGuard]
   },
   {
-    path: 'setPassword' , component: SetPasswordComponent
+    path: 'setPassword/:id' , component: SetPasswordComponent
   }
 
 

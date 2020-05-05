@@ -15,6 +15,7 @@ export class RegisterComponent implements OnInit {
     form: FormGroup;
     errorMsg: string = '';
     errorOccured: boolean = false;
+    //aadharNo: number;
 
     constructor(private _authService: AuthService,
       private router: Router,
@@ -35,14 +36,16 @@ export class RegisterComponent implements OnInit {
       });
     }
 
+
     registerurl = 'http://localhost:3000/register';
 
     addUser(){
-      
       this.http.post(this.registerurl,this.form.value)
           .subscribe(
             data =>{
               console.log(data);
+              localStorage.setItem('currentUser',JSON.stringify(data));
+              this.router.navigate(['/setPassword',this.form.value.aadhaar]);
             },
             error => {
               this.errorMsg = error.statusText;
@@ -51,10 +54,5 @@ export class RegisterComponent implements OnInit {
             }
           )  
     }
-
-    // addUser(){
-    //   console.log(this.form.value);
-    // }
-
 
   }
