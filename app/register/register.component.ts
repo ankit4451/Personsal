@@ -38,6 +38,7 @@ export class RegisterComponent implements OnInit {
 
 
     registerurl = 'http://localhost:3000/register';
+    userToken: any;
 
     addUser(){
       this.http.post(this.registerurl,this.form.value)
@@ -45,6 +46,8 @@ export class RegisterComponent implements OnInit {
             data =>{
               console.log(data);
               localStorage.setItem('currentUser',JSON.stringify(data));
+              this.userToken = JSON.parse(localStorage.getItem('currentUser'));
+              console.log(this.userToken.token);
               this.router.navigate(['/setPassword',this.form.value.aadhaar]);
             },
             error => {

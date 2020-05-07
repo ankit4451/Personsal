@@ -39,10 +39,11 @@ export class SetPasswordComponent implements OnInit {
     if(this.form.value.password === this.form.value.confirmPassword){
       let newForm: FormGroup = this.initialiseFormGroup(this.form.value.password);
       console.log(newForm.value);
-      this.http.post(this.setPasswordUrl + 'this.aadhaarNo', newForm.value)
+      this.http.post(this.setPasswordUrl + this.aadhaarNo, newForm.value, {responseType : 'text'})
           .subscribe(
             data => {
               console.log(data);
+              this.router.navigate(['/login']);
             },
             error =>{
               console.log(error);

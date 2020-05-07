@@ -16,16 +16,11 @@ export class AuthService {
 
    userData: any;
    userToken: any;
-   userJson: any;
+   //userJson: any;
 
   
   constructor(private _http: HttpClient,
     private router: Router) { 
-      this.userData = localStorage.getItem('currentUser');
-      this.userJson = JSON.parse(this.userData);
-      if(this.userJson != null){
-        this.userToken = this.userJson.token;
-      }
     }
 
   ErrorHandler(error: HttpErrorResponse){
@@ -39,11 +34,6 @@ export class AuthService {
 
   loggedIn(){
     return !!localStorage.getItem('token');
-  }
-
-  getToken() {
-   // console.log(this.userToken);
-    return this.userToken ;
   }
   
   logout(){
